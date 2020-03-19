@@ -1,0 +1,3 @@
+export const GET_PROFILE_REQUEST = 'profile:GET_PROFILE_REQUEST';
+export const GET_PROFILE_SUCCESS = 'profile:GET_PROFILE_SUCCESS';
+export const GET_PROFILE_FAILURE = 'profile:GET_PROFILE_FAILURE';

@@ -1,0 +1,11 @@
+
+ios/*
+android/*
+coverage/*
+build/*
+node_modules/*
+src/assets/lottie/*
+package.json
+package-lock.json
+bitrise.yml
+*.md

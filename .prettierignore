@@ -1,0 +1,10 @@
+*.ts
+ios/*
+android/*
+coverage/*
+build/*
+node_modules/*
+src/assets/lottie/*
+src/components/common/LogivanIcon/selection.json
+*.md
+bitrise.yml
