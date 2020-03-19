@@ -6,23 +6,36 @@
  * @flow
  */
 import React from 'react';
+import { UIManager } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-import { NavigationContainer } from '@react-navigation/native';
 import Navigation from 'navigation';
+import CommonService from 'manager/CommonService';
+import AppStateHandler from 'manager/AppStateHandler';
+import NetworkInfoHandler from 'manager/NetworkInfoHandler';
 // Redux Store
 import { persistor, store } from 'configureStore';
+import Platform from 'utils/platform';
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <NavigationContainer>
+if (Platform.isAndroid) {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
+
+class App extends React.PureComponent {
+  render() {
+    return (
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
           <Navigation />
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
-  );
-};
+          <CommonService />
+          <AppStateHandler />
+          <NetworkInfoHandler />
+        </PersistGate>
+      </Provider>
+    );
+  }
+}
 
 export default App;

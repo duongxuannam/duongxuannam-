@@ -28,15 +28,10 @@ const getProfileFailure = () => ({
 
 export const getProfile = () => async dispatch => {
   try {
-    console.log('sao k phari ma ');
-
     dispatch(getProfileRequest());
-    console.log('sao k phari ma ');
     const response = await ProfileApi.getProfile();
     dispatch(getProfileSuccess(response));
   } catch (error) {
-    console.log('sao k phari ma ', error);
-
     dispatch(getProfileFailure());
   }
 };

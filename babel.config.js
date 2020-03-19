@@ -27,6 +27,7 @@ module.exports = {
           configureStore: './src/configureStore',
           data: './src/data',
           services: './src/services',
+          manager: './src/manager',
         },
         extensions: ['.android.js', '.ios.js', '.js'],
       },
