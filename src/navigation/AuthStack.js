@@ -8,7 +8,7 @@ const AuthStack = createStackNavigator();
 class Stack extends React.PureComponent {
   render() {
     return (
-      <AuthStack.Navigator initialRouteName="Home" headerMode={null}>
+      <AuthStack.Navigator initialRouteName="Login" headerMode={null}>
         <AuthStack.Screen name="Login" component={Login} />
         <AuthStack.Screen name="Detail" component={Detail} />
       </AuthStack.Navigator>

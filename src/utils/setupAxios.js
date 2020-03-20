@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Config from 'react-native-config';
 import { doNothing } from 'constants/propsConstant';
-import Constants from 'utils/constants';
 import Platform from 'utils/platform';
 import ErrorConstants from 'constants/errorConstants';
 import { l10n } from 'languages';

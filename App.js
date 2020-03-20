@@ -13,6 +13,8 @@ import Navigation from 'navigation';
 import CommonService from 'manager/CommonService';
 import AppStateHandler from 'manager/AppStateHandler';
 import NetworkInfoHandler from 'manager/NetworkInfoHandler';
+import GlobalModal from 'manager/GlobalModal';
+import GlobalToast from 'manager/GlobalToast';
 // Redux Store
 import { persistor, store } from 'configureStore';
 import Platform from 'utils/platform';
@@ -32,6 +34,8 @@ class App extends React.PureComponent {
           <CommonService />
           <AppStateHandler />
           <NetworkInfoHandler />
+          <GlobalModal />
+          <GlobalToast />
         </PersistGate>
       </Provider>
     );
