@@ -48,10 +48,29 @@
     "eslint-config-airbnb": "18.0.1",
     "eslint-config-prettier": "6.5.0",
     "jest": "25.1.0",
+    "babel-preset-react-native": "1.9.0",
     "metro-react-native-babel-preset": "0.58.0",
-    "react-test-renderer": "16.8.6"
+    "react-test-renderer": "16.8.6",
+    "enzyme-adapter-react-16": "1.1.0",
+    "enzyme": "3.7.0",
+    "react-addons-test-utils": "15.6.2",
+    "react-dom": "16.8.6"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|@react-native-community/react-native-device-info|react-native-reanimated|@react-native-community/.*|react-native-vector-icons|react-native-config|react-navigation-redux-helpers|react-native-fast-image|react-native-image-resizer|react-native-linear-gradient|react-native-animatable|react-native-snap-carousel|react-native-image-zoom-viewer|react-native-image-pan-zoomc-sto|react-native-modal|react-native-screens|react-native-gesture-handler|react-native-iphone-x-helper|@react-navigation/.*|react-native-gesture-handler/.*)/)"
+    ],
+    "setupFiles": [
+      "./jest-setup.js"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "automock": false
   }
 }
