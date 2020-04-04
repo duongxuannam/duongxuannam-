@@ -21,6 +21,7 @@ module.exports = {
           api: './src/api',
           assets: './src/assets',
           components: './src/components',
+          screens: './src/screens',
           languages: './src/languages',
           utils: './src/utils',
           constants: './src/constants',

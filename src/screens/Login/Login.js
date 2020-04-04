@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TextInput, StatusBar, TouchableOpacity } from 'react-native';
 import Svg, { Image, Circle, ClipPath } from 'react-native-svg';
 import Animated, { Easing } from 'react-native-reanimated';
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
+import throttle from 'lodash/throttle';
+import { CommonActions } from '@react-navigation/native';
 
 import Screen from 'utils/screen';
 import Images from 'utils/images';
@@ -56,7 +58,7 @@ function runTiming(clock, value, dest) {
   ]);
 }
 
-class HomeScreen extends React.PureComponent {
+class Login extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -115,6 +117,24 @@ class HomeScreen extends React.PureComponent {
       extrapolate: Extrapolate.CLAMP,
     });
   }
+
+  goHome = () => {
+    const { navigation } = this.props;
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          {
+            name: 'MainStack',
+            params: {
+              screen: 'Home',
+            },
+          },
+        ],
+      })
+    );
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -198,13 +218,19 @@ class HomeScreen extends React.PureComponent {
             />
 
             <Animated.View style={styles.buttonSignIn}>
-              <Text style={styles.signInTitle}>SIGN IN</Text>
+              <TouchableOpacity onPress={this.events.goHome}>
+                <Text style={styles.signInTitle}>SIGN IN</Text>
+              </TouchableOpacity>
             </Animated.View>
           </Animated.View>
         </View>
       </View>
     );
   }
+
+  events = {
+    goHome: throttle(this.goHome, 500),
+  };
 }
 
-export default HomeScreen;
+export default Login;

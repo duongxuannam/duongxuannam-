@@ -1,19 +1,20 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-import AuthStack from './AuthStack';
-import MainStack from './AuthStack';
+import Routes from 'navigation/routes';
+import { navigationRef } from './actions';
+import AuthStack from './navigators/AuthStack';
+import MainStack from './navigators/MainStack';
 
 const RootStack = createStackNavigator();
 
 class Navigation extends React.PureComponent {
   render() {
     return (
-      <NavigationContainer>
-        <RootStack.Navigator initialRouteName="AuthStack" headerMode={null}>
-          <RootStack.Screen name="AuthStack" component={AuthStack} />
-          <RootStack.Screen name="Detail" component={MainStack} />
+      <NavigationContainer ref={navigationRef}>
+        <RootStack.Navigator initialRouteName={Routes.AUTH_STACK} headerMode={null}>
+          <RootStack.Screen name={Routes.AUTH_STACK} component={AuthStack} />
+          <RootStack.Screen name={Routes.MAIN_STACK} component={MainStack} />
         </RootStack.Navigator>
       </NavigationContainer>
     );

@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from '../screens/Login';
-import Detail from '../screens/Detail';
+import Routes from 'navigation/routes';
+import Login from 'screens/Login';
 
 const AuthStack = createStackNavigator();
 
 class Stack extends React.PureComponent {
   render() {
     return (
-      <AuthStack.Navigator initialRouteName="Login" headerMode={null}>
-        <AuthStack.Screen name="Login" component={Login} />
-        <AuthStack.Screen name="Detail" component={Detail} />
+      <AuthStack.Navigator initialRouteName={Routes.LOGIN} headerMode={null}>
+        <AuthStack.Screen name={Routes.LOGIN} component={Login} />
       </AuthStack.Navigator>
     );
   }
