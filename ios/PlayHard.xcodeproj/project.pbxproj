@@ -19,6 +19,7 @@
 		567A15CF16D663011D322C9A /* libPods-PlayHardTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78F0A620FB309742909D1F5A /* libPods-PlayHardTests.a */; };
 		5A7B283E221D05F84442BCF4 /* libPods-PlayHard-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9576565F296B9F8BF0F356E /* libPods-PlayHard-tvOS.a */; };
 		9A7CF6C0FCDFE51E38BAEFE2 /* libPods-PlayHard-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F34C80C8056439E0AEA33239 /* libPods-PlayHard-tvOSTests.a */; };
+		DE8B2E3024388A29000F1B16 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE8B2E2F24388A29000F1B16 /* WebRTC.framework */; };
 		F3665EDC74B6056CC94FBECF /* libPods-PlayHard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A67F6099EE590F7C2490C378 /* libPods-PlayHard.a */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "PlayHard-tvOS";
+		};
+		DE8B2E2D24388A0C000F1B16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DE8B2E2924388A0C000F1B16 /* RCTWebRTC.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 35A2221F1CB493700015FD5C;
+			remoteInfo = RCTWebRTC;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -80,6 +88,8 @@
 		DE0AB31E24247BD800B1CF8F /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		DE0AB31F24247BD800B1CF8F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		DE0AB32024247BD800B1CF8F /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		DE8B2E2924388A0C000F1B16 /* RCTWebRTC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebRTC.xcodeproj; path = "../node_modules/react-native-webrtc/ios/RCTWebRTC.xcodeproj"; sourceTree = "<group>"; };
+		DE8B2E2F24388A29000F1B16 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = "../node_modules/react-native-webrtc/ios/WebRTC.framework"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F34C80C8056439E0AEA33239 /* libPods-PlayHard-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlayHard-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +109,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F3665EDC74B6056CC94FBECF /* libPods-PlayHard.a in Frameworks */,
+				DE8B2E3024388A29000F1B16 /* WebRTC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +180,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				DE8B2E2924388A0C000F1B16 /* RCTWebRTC.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -176,6 +188,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				DE8B2E2F24388A29000F1B16 /* WebRTC.framework */,
 				13B07FAE1A68108700A75B9A /* PlayHard */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PlayHardTests */,
@@ -238,6 +251,14 @@
 			path = "../node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
+		DE8B2E2A24388A0C000F1B16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DE8B2E2E24388A0C000F1B16 /* libRCTWebRTC.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -271,6 +292,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				7C117D993D4AA9903C4E76D4 /* [CP] Copy Pods Resources */,
+				A15158F6A4BA025A838535DF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -356,6 +378,12 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = DE8B2E2A24388A0C000F1B16 /* Products */;
+					ProjectRef = DE8B2E2924388A0C000F1B16 /* RCTWebRTC.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* PlayHard */,
@@ -365,6 +393,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		DE8B2E2E24388A0C000F1B16 /* libRCTWebRTC.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTWebRTC.a;
+			remoteRef = DE8B2E2D24388A0C000F1B16 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -497,6 +535,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PlayHard/Pods-PlayHard-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A15158F6A4BA025A838535DF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PlayHard/Pods-PlayHard-frameworks.sh",
+				"${PODS_ROOT}/../../node_modules/react-native-webrtc/ios/WebRTC.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PlayHard/Pods-PlayHard-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B17A7745C172FC20E92AC0E7 /* [CP] Check Pods Manifest.lock */ = {

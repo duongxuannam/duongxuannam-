@@ -10,7 +10,7 @@ class Stack extends React.PureComponent {
   render() {
     return (
       <MainStack.Navigator initialRouteName={Routes.HOME}>
-        <MainStack.Screen name={Routes.HOME} component={Home} options={{ title: 'Dep trai' }} />
+        <MainStack.Screen name={Routes.HOME} component={Home} options={{ title: 'Home' }} />
         <MainStack.Screen name={Routes.DETAIL} component={Detail} options={{ title: 'Detail' }} />
       </MainStack.Navigator>
     );
