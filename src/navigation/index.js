@@ -12,7 +12,7 @@ class Navigation extends React.PureComponent {
   render() {
     return (
       <NavigationContainer ref={navigationRef}>
-        <RootStack.Navigator initialRouteName={Routes.MAIN_STACK} headerMode={null}>
+        <RootStack.Navigator initialRouteName={Routes.AUTH_STACK} headerMode={null}>
           <RootStack.Screen name={Routes.AUTH_STACK} component={AuthStack} />
           <RootStack.Screen name={Routes.MAIN_STACK} component={MainStack} />
         </RootStack.Navigator>

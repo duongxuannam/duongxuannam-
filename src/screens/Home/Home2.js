@@ -1,40 +1,32 @@
 import React from 'react';
 import { View, SafeAreaView, Button } from 'react-native';
 import { RTCPeerConnection, RTCView, mediaDevices } from 'react-native-webrtc';
-import SocketService from 'services/socketService';
+import io from 'socket.io-client';
+
 import styles from './styles';
 
-const configuration = { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] };
-const localPC = new RTCPeerConnection(configuration);
+let socket = null;
 
-class App extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      localStream: undefined,
-      remoteStream: undefined,
-      cachedLocalPC: undefined,
-      cachedRemotePC: undefined,
-      isMuted: false,
-      customerId: props?.route?.params?.params?.customerId,
-      myId: props?.route?.params?.params?.myId,
-    };
-  }
+export default function App() {
+  const [localStream, setLocalStream] = React.useState();
+  const [remoteStream, setRemoteStream] = React.useState();
+  const [cachedLocalPC, setCachedLocalPC] = React.useState();
+  const [cachedRemotePC, setCachedRemotePC] = React.useState();
 
-  componentDidMount() {
-    this.openMyCamera();
-    this.sendStream();
-  }
+  const [isMuted, setIsMuted] = React.useState(false);
 
-  sendStream = async () => {
-    const { myId } = this.state;
-    localPC.onicecandidate = event =>
-      event.candidate
-        ? SocketService.sendStream(event.candidate, myId)
-        : console.log('Sent All Ice');
+  const connectSocket = () => {
+    socket = io('127.0.0.1:3000', {});
+    return socket;
   };
 
-  openMyCamera = async () => {
+  const disConnectSocket = () => {
+    if (socket) {
+      socket.disconnect();
+    }
+  };
+
+  const startLocalStream = async () => {
     // isFront will determine if the initial camera should face user or environment
     const isFront = true;
     const devices = await mediaDevices.enumerateDevices();
@@ -57,15 +49,10 @@ class App extends React.PureComponent {
       },
     };
     const newStream = await mediaDevices.getUserMedia(constraints);
-    this.setState({
-      localStream: newStream,
-    });
+    setLocalStream(newStream);
   };
 
-  showMyFace = async () => {};
-
-  startCall = async () => {
-    const { remoteStream, localStream } = this.state;
+  const startCall = async () => {
     // You'll most likely need to use a STUN server at least. Look into TURN and decide if that's necessary for your project
     const configuration = { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] };
     const localPC = new RTCPeerConnection(configuration);
@@ -96,9 +83,7 @@ class App extends React.PureComponent {
       console.log('remotePC tracking with ', e);
       if (e.stream && remoteStream !== e.stream) {
         console.log('RemotePC received the stream', e.stream);
-        this.setState({
-          remoteStream: e.stream,
-        });
+        setRemoteStream(e.stream);
       }
     };
 
@@ -110,8 +95,6 @@ class App extends React.PureComponent {
       console.log('Offer from localPC, setLocalDescription');
       await localPC.setLocalDescription(offer);
       console.log('remotePC, setRemoteDescription');
-      console.log('here ', localPC.localDescription);
-
       await remotePC.setRemoteDescription(localPC.localDescription);
       console.log('RemotePC, createAnswer');
       const answer = await remotePC.createAnswer();
@@ -123,29 +106,27 @@ class App extends React.PureComponent {
     } catch (err) {
       console.error(err);
     }
-    this.setState({ cachedLocalPC: localPC, cachedRemotePC: remotePC });
+    setCachedLocalPC(localPC);
+    setCachedRemotePC(remotePC);
   };
 
-  switchCamera = () => {
-    const { localStream } = this.state;
+  const switchCamera = () => {
     localStream.getVideoTracks().forEach(track => track._switchCamera());
   };
 
   // Mutes the local's outgoing audio
-  toggleMute = () => {
-    const { remoteStream, localStream } = this.state;
+  const toggleMute = () => {
     if (!remoteStream) {
       return;
     }
     localStream.getAudioTracks().forEach(track => {
       console.log(track.enabled ? 'muting' : 'unmuting', ' local track', track);
       track.enabled = !track.enabled;
-      this.setState({ isMuted: !track.enabled });
+      setIsMuted(!track.enabled);
     });
   };
 
-  closeStreams = () => {
-    const { cachedLocalPC, localStream, remoteStream, cachedRemotePC } = this.state;
+  const closeStreams = () => {
     if (cachedLocalPC) {
       cachedLocalPC.removeStream(localStream);
       cachedLocalPC.close();
@@ -154,43 +135,37 @@ class App extends React.PureComponent {
       cachedRemotePC.removeStream(remoteStream);
       cachedRemotePC.close();
     }
-
-    this.setState({
-      localStream: undefined,
-      remoteStream: undefined,
-      cachedRemotePC: undefined,
-      cachedLocalPC: undefined,
-    });
+    setLocalStream();
+    setRemoteStream();
+    setCachedRemotePC();
+    setCachedLocalPC();
   };
-  render() {
-    const { localStream, remoteStream, isMuted } = this.state;
-    return (
-      <SafeAreaView style={styles.container}>
-        {!localStream && <Button title="Click to start stream" onPress={this.startLocalStream} />}
-        {localStream && (
-          <Button title="Click to start call" onPress={this.startCall} disabled={!!remoteStream} />
-        )}
 
-        {localStream && (
-          <View style={styles.toggleButtons}>
-            <Button title="Switch camera" onPress={this.switchCamera} />
-            <Button
-              title={`${isMuted ? 'Unmute' : 'Mute'} stream`}
-              onPress={this.toggleMute}
-              disabled={!remoteStream}
-            />
-          </View>
-        )}
+  return (
+    <SafeAreaView style={styles.container}>
+      {!localStream && <Button title="Click to start stream" onPress={startLocalStream} />}
+      {localStream && (
+        <Button title="Click to start call" onPress={startCall} disabled={!!remoteStream} />
+      )}
 
-        <View style={styles.rtcview}>
-          {localStream && <RTCView style={styles.rtc} streamURL={localStream.toURL()} />}
+      {localStream && (
+        <View style={styles.toggleButtons}>
+          <Button title="Switch camera" onPress={switchCamera} />
+          <Button
+            title={`${isMuted ? 'Unmute' : 'Mute'} stream`}
+            onPress={toggleMute}
+            disabled={!remoteStream}
+          />
         </View>
-        <View style={styles.rtcview}>
-          {remoteStream && <RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />}
-        </View>
-        <Button title="Click to stop call" onPress={this.closeStreams} disabled={!remoteStream} />
-      </SafeAreaView>
-    );
-  }
+      )}
+
+      <View style={styles.rtcview}>
+        {localStream && <RTCView style={styles.rtc} streamURL={localStream.toURL()} />}
+      </View>
+      <View style={styles.rtcview}>
+        {remoteStream && <RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />}
+      </View>
+      <Button title="Click to stop call" onPress={closeStreams} disabled={!remoteStream} />
+    </SafeAreaView>
+  );
 }
-export default App;

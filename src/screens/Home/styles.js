@@ -14,7 +14,7 @@ export default StyleSheet.create({
   rtcview: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: '40%',
+    height: '20%',
     width: '80%',
     backgroundColor: 'black',
   },

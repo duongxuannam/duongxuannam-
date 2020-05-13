@@ -35,7 +35,8 @@ const setBaseUrl = baseUrl => {
   } else {
     console.log('Config.URL_API', Config.URL_API);
 
-    newBaseUrl = Config.URL_API;
+    // newBaseUrl = Config.URL_API;
+    newBaseUrl = 'http://192.168.1.47:3000';
     // newBaseUrl = Constants.LOGIVAN_SERVERS.PRODUCTION;
   }
 
@@ -124,6 +125,7 @@ const setupOnResponseInterceptors = (
   };
 
   const onResponseError = error => {
+    console.log('err ', error);
     let alertMessage = ERROR_MESSAGES.DEFAULT;
     if (!error.response) {
       switch (error.message) {
@@ -182,6 +184,17 @@ const setupOnResponseInterceptors = (
   };
 
   axios.interceptors.response.use(onResponseSuccess, onResponseError);
+  // axios.interceptors.request.use(
+  //   function(config) {
+  //     // Do something before request is sent
+  //     console.log('con f', config);
+  //     return config;
+  //   },
+  //   function(error) {
+  //     // Do something with request error
+  //     return Promise.reject(error);
+  //   }
+  // );
 };
 
 const SetupAxios = {

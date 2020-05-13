@@ -1,4 +1,5 @@
 import { delay } from 'utils/frames';
+import axios from 'axios';
 
 const getProfile = async () => {
   console.log('what');
@@ -9,6 +10,10 @@ const getProfile = async () => {
     },
   };
 };
+
+const testApi = async () => axios.get('/getArrUserInfo');
+
 export default {
   getProfile,
+  testApi,
 };

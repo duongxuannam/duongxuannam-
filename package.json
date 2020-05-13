@@ -6,7 +6,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "test:android": "scripts/android/connectDevice.sh react-native run-android"
+    "test:android": "scripts/android/connectDevice.sh",
+    "test:ios": "react-native run-ios"
   },
   "dependencies": {
     "@react-native-community/async-storage": "1.8.1",
@@ -35,7 +36,8 @@
     "redux": "4.0.5",
     "redux-devtools-extension": "2.13.8",
     "redux-persist": "6.0.0",
-    "redux-thunk": "2.3.0"
+    "redux-thunk": "2.3.0",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.8.7",
