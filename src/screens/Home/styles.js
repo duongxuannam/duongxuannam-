@@ -2,12 +2,13 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   // container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  container: {
-    backgroundColor: '#313131',
-    justifyContent: 'space-between',
+
+  containerView: {
+    justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
+    flex: 1,
   },
+  btn: { marginVertical: 40 },
   text: {
     fontSize: 30,
   },
