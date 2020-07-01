@@ -7,7 +7,7 @@ class _SocketService {
   }
   connectSocket = () => {
     this.disConnectSocket();
-    this.socket = io('https://8d18736d0121.ngrok.io/', {});
+    this.socket = io('https://api-playhard.herokuapp.com/', {});
     return this.socket;
   };
 

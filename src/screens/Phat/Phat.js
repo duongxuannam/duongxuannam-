@@ -18,6 +18,7 @@ class Phat extends React.PureComponent {
     super(props);
     this.state = {
       localStream: null,
+      remoteStream: null,
       id: null,
     };
     SocketService.connectSocket();
@@ -84,19 +85,13 @@ class Phat extends React.PureComponent {
     await peerConnection.setLocalDescription(offer);
 
     SocketService.offer(id, peerConnection?.localDescription);
-
-    peerConnection.onaddstream = e => {
-      console.log('onaddstream e');
-    };
   };
 
   onAnswerCallBack = (id, description) => {
-    console.log('onAnswerCallBack', peerConnections, peerConnections[id]);
     peerConnections[id].setRemoteDescription(new RTCSessionDescription(description));
   };
 
   onCandidateCallBack = (id, candidate) => {
-    console.log('onCandidateCallBack', candidate, peerConnections[id]);
     peerConnections[id].addIceCandidate(new RTCIceCandidate(candidate));
   };
 
@@ -113,7 +108,7 @@ class Phat extends React.PureComponent {
   };
 
   render() {
-    const { localStream, id } = this.state;
+    const { localStream, id, remoteStream } = this.state;
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.upid}>
@@ -122,6 +117,9 @@ class Phat extends React.PureComponent {
         <Text>{id}</Text>
         <View style={styles.rtcview}>
           {localStream && <RTCView style={styles.rtc} streamURL={localStream.toURL()} />}
+        </View>
+        <View style={styles.rtcview}>
+          {remoteStream && <RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />}
         </View>
       </View>
     );

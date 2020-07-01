@@ -6,6 +6,7 @@ import {
   RTCView,
   RTCSessionDescription,
   RTCIceCandidate,
+  mediaDevices,
 } from 'react-native-webrtc';
 
 import styles from './styles';
@@ -18,6 +19,7 @@ class Phat extends React.PureComponent {
     super(props);
     this.state = {
       localStream: null,
+      remoteStream: null,
       id: null,
     };
     SocketService.connectSocket();
@@ -29,11 +31,40 @@ class Phat extends React.PureComponent {
     SocketService.onOffer(this.onOfferCallBack);
     SocketService.onConnect();
     SocketService.onDisconnectPeer(this.onDisconnectPeerCallBack);
+    this.openMyCamera();
   }
 
   componentWillUnmount() {
     SocketService.disConnectSocket();
   }
+
+  openMyCamera = async () => {
+    // isFront will determine if the initial camera should face user or environment
+    const isFront = true;
+    const devices = await mediaDevices.enumerateDevices();
+
+    const facing = isFront ? 'front' : 'environment';
+    const videoSourceId = devices.find(
+      device => device.kind === 'videoinput' && device.facing === facing
+    );
+    const facingMode = isFront ? 'user' : 'environment';
+    const constraints = {
+      audio: true,
+      video: {
+        mandatory: {
+          minWidth: 500, // Provide your own width, height and frame rate here
+          minHeight: 300,
+          minFrameRate: 30,
+        },
+        facingMode,
+        optional: videoSourceId ? [{ sourceId: videoSourceId }] : [],
+      },
+    };
+    const newStream = await mediaDevices.getUserMedia(constraints);
+    this.setState({
+      localStream: newStream,
+    });
+  };
 
   onCandidateCallBack = (id, candidate) => {
     console.log('onCandidateCallBack e');
@@ -45,28 +76,25 @@ class Phat extends React.PureComponent {
     console.log('onOfferCallBack');
 
     peerConnection = new RTCPeerConnection(configuration);
-
-    await peerConnection.setRemoteDescription(new RTCSessionDescription(description));
-    const answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
-    SocketService.answer(id, peerConnection.localDescription);
-
-    peerConnection.onaddstream = e => {
-      console.log('onaddstream e');
-      if (e.stream && peerConnection !== e.stream) {
-        this.setState({
-          localStream: e.stream,
-        });
-      }
-    };
-
     peerConnection.onicecandidate = event => {
       if (event.candidate) {
         console.log('onicecandidate e');
 
-        SocketService.candidate(id, event.candidate);
+        SocketService.candidate(id, event.candidate.toJSON());
       }
     };
+    peerConnection.onaddstream = e => {
+      console.log('onaddstream e');
+      if (e.stream && peerConnection !== e.stream) {
+        this.setState({
+          remoteStream: e.stream,
+        });
+      }
+    };
+    await peerConnection.setRemoteDescription(new RTCSessionDescription(description));
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setLocalDescription(answer);
+    SocketService.answer(id, peerConnection.localDescription);
   };
 
   onDisconnectPeerCallBack = id => {
@@ -81,8 +109,7 @@ class Phat extends React.PureComponent {
   };
 
   render() {
-    const { localStream, id } = this.state;
-    console.log('lca ', localStream);
+    const { localStream, id, remoteStream } = this.state;
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.upid}>
@@ -91,6 +118,9 @@ class Phat extends React.PureComponent {
         <Text>{id}</Text>
         <View style={styles.rtcview}>
           {localStream && <RTCView style={styles.rtc} streamURL={localStream.toURL()} />}
+        </View>
+        <View style={styles.rtcview}>
+          {remoteStream && <RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />}
         </View>
       </View>
     );
