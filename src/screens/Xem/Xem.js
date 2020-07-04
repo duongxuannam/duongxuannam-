@@ -21,6 +21,7 @@ class Phat extends React.PureComponent {
       localStream: null,
       remoteStream: null,
       id: null,
+      isMuted: null,
     };
     SocketService.connectSocket();
   }
@@ -36,6 +37,7 @@ class Phat extends React.PureComponent {
 
   componentWillUnmount() {
     SocketService.disConnectSocket();
+    this.onExitScreen();
   }
 
   openMyCamera = async () => {
@@ -67,24 +69,20 @@ class Phat extends React.PureComponent {
   };
 
   onCandidateCallBack = (id, candidate) => {
-    console.log('onCandidateCallBack e');
-
     peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
   };
 
   onOfferCallBack = async (id, description) => {
-    console.log('onOfferCallBack');
+    const { localStream } = this.state;
 
     peerConnection = new RTCPeerConnection(configuration);
+    peerConnection.addStream(localStream);
     peerConnection.onicecandidate = event => {
       if (event.candidate) {
-        console.log('onicecandidate e');
-
         SocketService.candidate(id, event.candidate.toJSON());
       }
     };
     peerConnection.onaddstream = e => {
-      console.log('onaddstream e');
       if (e.stream && peerConnection !== e.stream) {
         this.setState({
           remoteStream: e.stream,
@@ -97,8 +95,37 @@ class Phat extends React.PureComponent {
     SocketService.answer(id, peerConnection.localDescription);
   };
 
-  onDisconnectPeerCallBack = id => {
+  switchCamera = () => {
+    const { localStream } = this.state;
+    localStream.getVideoTracks().forEach(track => track._switchCamera());
+  };
+
+  // Mutes the local's outgoing audio
+  toggleMute = () => {
+    const { localStream, remoteStream } = this.state;
+
+    if (!remoteStream) {
+      return;
+    }
+    localStream.getAudioTracks().forEach(track => {
+      console.log(track.enabled ? 'muting' : 'unmuting', ' local track', track);
+      track.enabled = !track.enabled;
+      this.setState({
+        isMuted: !track.enabled,
+      });
+    });
+  };
+
+  onExitScreen = () => {
     peerConnection.close();
+    this.setState({
+      localStream: null,
+      remoteStream: null,
+    });
+  };
+
+  onDisconnectPeerCallBack = id => {
+    peerConnection && peerConnection.close();
   };
 
   upid = () => {
@@ -112,8 +139,8 @@ class Phat extends React.PureComponent {
     const { localStream, id, remoteStream } = this.state;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.upid}>
-          <Text>popop</Text>
+        <TouchableOpacity onPress={this.switchCamera}>
+          <Text>switchCamera</Text>
         </TouchableOpacity>
         <Text>{id}</Text>
         <View style={styles.rtcview}>

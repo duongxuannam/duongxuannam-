@@ -20,6 +20,7 @@ class Phat extends React.PureComponent {
       localStream: null,
       remoteStream: null,
       id: null,
+      isMuted: null,
     };
     SocketService.connectSocket();
     SocketService.onWatcher(this.onWatcherCallBack);
@@ -35,6 +36,7 @@ class Phat extends React.PureComponent {
 
   componentWillUnmount() {
     SocketService.disConnectSocket();
+    this.onExitScreen();
   }
 
   openMyCamera = async () => {
@@ -88,11 +90,50 @@ class Phat extends React.PureComponent {
   };
 
   onAnswerCallBack = (id, description) => {
+    peerConnections[id].onaddstream = e => {
+      if (e.stream && peerConnections[id] !== e.stream) {
+        this.setState({
+          remoteStream: e.stream,
+        });
+      }
+    };
     peerConnections[id].setRemoteDescription(new RTCSessionDescription(description));
   };
 
   onCandidateCallBack = (id, candidate) => {
     peerConnections[id].addIceCandidate(new RTCIceCandidate(candidate));
+  };
+
+  switchCamera = () => {
+    const { localStream } = this.state;
+    localStream.getVideoTracks().forEach(track => track._switchCamera());
+  };
+
+  // Mutes the local's outgoing audio
+  toggleMute = () => {
+    const { localStream, remoteStream } = this.state;
+
+    if (!remoteStream) {
+      return;
+    }
+    localStream.getAudioTracks().forEach(track => {
+      console.log(track.enabled ? 'muting' : 'unmuting', ' local track', track);
+      track.enabled = !track.enabled;
+      this.setState({
+        isMuted: !track.enabled,
+      });
+    });
+  };
+
+  onExitScreen = () => {
+    Object.keys(peerConnections).forEach(function(key) {
+      peerConnections[key] && peerConnections[key].close();
+      peerConnections[key] && delete peerConnections[key];
+    });
+    this.setState({
+      localStream: null,
+      remoteStream: null,
+    });
   };
 
   onDisconnectPeerCallBack = id => {
@@ -111,8 +152,8 @@ class Phat extends React.PureComponent {
     const { localStream, id, remoteStream } = this.state;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.upid}>
-          <Text>popop</Text>
+        <TouchableOpacity onPress={this.switchCamera}>
+          <Text>switchCamera</Text>
         </TouchableOpacity>
         <Text>{id}</Text>
         <View style={styles.rtcview}>
