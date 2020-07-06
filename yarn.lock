@@ -6665,6 +6665,11 @@ react-native-gesture-handler@1.6.0:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-incall-manager@^3.2.7:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/react-native-incall-manager/-/react-native-incall-manager-3.2.7.tgz#3a6f34bd4bb89ed4f0bcaa2ffc571e9b2f0c479b"
+  integrity sha512-qrWXISceKhXZL3F8FHKsrFSCrYgTmWpj1or7oV8+vKhYUJshKk8grMrMoZlF+xldTTFvOdYCEDEktSVWxYN4Dw==
+
 react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"

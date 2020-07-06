@@ -8,7 +8,7 @@ import {
   RTCIceCandidate,
   RTCSessionDescription,
 } from 'react-native-webrtc';
-
+import IncallManager from 'react-native-incall-manager';
 import styles from './styles';
 
 const peerConnections = {};
@@ -32,6 +32,8 @@ class Phat extends React.PureComponent {
 
   componentDidMount() {
     this.openMyCamera();
+    IncallManager.setKeepScreenOn(true);
+    IncallManager.setForceSpeakerphoneOn(true);
   }
 
   componentWillUnmount() {
