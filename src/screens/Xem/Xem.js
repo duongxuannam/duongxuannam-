@@ -8,6 +8,7 @@ import {
   RTCIceCandidate,
   mediaDevices,
 } from 'react-native-webrtc';
+import InCallManager from 'react-native-incall-manager';
 
 import styles from './styles';
 
@@ -24,6 +25,7 @@ class Phat extends React.PureComponent {
       isMuted: null,
     };
     SocketService.connectSocket();
+    InCallManager.start();
   }
 
   componentDidMount() {
@@ -33,6 +35,8 @@ class Phat extends React.PureComponent {
     SocketService.onConnect();
     SocketService.onDisconnectPeer(this.onDisconnectPeerCallBack);
     this.openMyCamera();
+    InCallManager.setKeepScreenOn(true);
+    InCallManager.setForceSpeakerphoneOn(true);
   }
 
   componentWillUnmount() {
