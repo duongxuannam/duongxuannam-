@@ -51,7 +51,7 @@ class Phat extends React.PureComponent {
 
     const facing = isFront ? 'front' : 'environment';
     const videoSourceId = devices.find(
-      device => device.kind === 'videoinput' && device.facing === facing
+      (device) => device.kind === 'videoinput' && device.facing === facing
     );
     const facingMode = isFront ? 'user' : 'environment';
     const constraints = {
@@ -81,12 +81,12 @@ class Phat extends React.PureComponent {
 
     peerConnection = new RTCPeerConnection(configuration);
     peerConnection.addStream(localStream);
-    peerConnection.onicecandidate = event => {
+    peerConnection.onicecandidate = (event) => {
       if (event.candidate) {
         SocketService.candidate(id, event.candidate.toJSON());
       }
     };
-    peerConnection.onaddstream = e => {
+    peerConnection.onaddstream = (e) => {
       if (e.stream && peerConnection !== e.stream) {
         this.setState({
           remoteStream: e.stream,
@@ -101,7 +101,7 @@ class Phat extends React.PureComponent {
 
   switchCamera = () => {
     const { localStream } = this.state;
-    localStream.getVideoTracks().forEach(track => track._switchCamera());
+    localStream.getVideoTracks().forEach((track) => track._switchCamera());
   };
 
   // Mutes the local's outgoing audio
@@ -111,7 +111,7 @@ class Phat extends React.PureComponent {
     if (!remoteStream) {
       return;
     }
-    localStream.getAudioTracks().forEach(track => {
+    localStream.getAudioTracks().forEach((track) => {
       console.log(track.enabled ? 'muting' : 'unmuting', ' local track', track);
       track.enabled = !track.enabled;
       this.setState({
@@ -121,14 +121,14 @@ class Phat extends React.PureComponent {
   };
 
   onExitScreen = () => {
-    peerConnection.close();
+    peerConnection && peerConnection.close();
     this.setState({
       localStream: null,
       remoteStream: null,
     });
   };
 
-  onDisconnectPeerCallBack = id => {
+  onDisconnectPeerCallBack = (id) => {
     peerConnection && peerConnection.close();
   };
 
