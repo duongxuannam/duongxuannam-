@@ -25,15 +25,15 @@ class _SocketService {
     });
   };
 
-  onWatcher = cb => {
-    this.socket.on('watcher', id => cb(id));
+  onWatcher = (cb) => {
+    this.socket.on('watcher', (id) => cb(id));
   };
 
   candidate = (id, candidate) => {
     this.socket.emit('candidate', id, candidate);
   };
 
-  onCandidate = cb => {
+  onCandidate = (cb) => {
     this.socket.on('candidate', (id, candidate) => cb(id, candidate));
   };
 
@@ -41,7 +41,7 @@ class _SocketService {
     this.socket.emit('offer', id, description);
   };
 
-  onOffer = cb => {
+  onOffer = (cb) => {
     this.socket.on('offer', (id, description) => cb(id, description));
   };
 
@@ -49,7 +49,7 @@ class _SocketService {
     this.socket.emit('answer', id, description);
   };
 
-  onAnswer = cb => {
+  onAnswer = (cb) => {
     this.socket.on('answer', (id, description) => cb(id, description));
   };
 
@@ -66,8 +66,8 @@ class _SocketService {
     });
   };
 
-  onDisconnectPeer = cb => {
-    this.socket.on('disconnectPeer', id => cb(id));
+  onDisconnectPeer = (cb) => {
+    this.socket.on('disconnectPeer', (id) => cb(id));
   };
   // socket.on('candidate', (id, message) => {
   //   socket.to(id).emit('candidate', socket.id, message);

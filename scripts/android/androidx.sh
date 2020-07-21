@@ -11,7 +11,7 @@
 #
 # This isn't perfect; it won't find every conversion issue. You break it you buy it. Viewer discretion is advised.
 
-MAPPING_FILE=scripts/androidx-class-mapping.csv
+MAPPING_FILE=scripts/android/androidx-class-mapping.csv
 PROJECT_DIR=node_modules
 
 replace=""

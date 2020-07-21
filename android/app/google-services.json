@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "41822825360",
+    "firebase_url": "https://playhard-2c8eb.firebaseio.com",
+    "project_id": "playhard-2c8eb",
+    "storage_bucket": "playhard-2c8eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41822825360:android:5958c6aa00098a12576115",
+        "android_client_info": {
+          "package_name": "com.playhard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41822825360-qrd0avles28rbs15q2tt5nfej6hmlddk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCb-4KfeCnyIZZAr56NzucbeAhCLI-s67M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41822825360-qrd0avles28rbs15q2tt5nfej6hmlddk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
