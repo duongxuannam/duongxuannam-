@@ -17,11 +17,11 @@ class NotificationHandler extends React.PureComponent {
     LocalNotificationService.configure(this.onOpenNotification);
   }
 
-  onRegister = (token) => {
+  onRegister = token => {
     console.log('[App] onRegister: ', token);
   };
 
-  onNotification = (notify) => {
+  onNotification = notify => {
     console.log('[App] onNotification: ', notify);
     const options = {
       soundName: 'default',
@@ -32,7 +32,7 @@ class NotificationHandler extends React.PureComponent {
     LocalNotificationService.showNotification(0, notify.title, notify.body, notify, options);
   };
 
-  onOpenNotification = (notify) => {
+  onOpenNotification = notify => {
     console.log('[App] onOpenNotification: ', notify);
     alert('Open Notification: ' + notify?.body);
   };
