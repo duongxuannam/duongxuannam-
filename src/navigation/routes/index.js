@@ -9,4 +9,10 @@ export default {
   // MainStack
   HOME: 'Home',
   DETAIL: 'Detail',
+
+  /// TAB
+  VIDEO_CALL: 'VideoCall',
+  CHAT: 'Chat',
+  NOTIFICATION: 'Notification',
+  ACCOUNT: 'Account',
 };

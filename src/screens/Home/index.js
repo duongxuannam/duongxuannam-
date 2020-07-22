@@ -1,7 +1,7 @@
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import ProfileSelector from 'data/profile/selectors';
-import { getProfile } from 'data/profile/actions';
+import {getProfile} from 'data/profile/actions';
 import Home from './ChooseType';
 
 const mapStateToProps = state => ({
@@ -15,7 +15,4 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
