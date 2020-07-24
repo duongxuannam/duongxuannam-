@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import SocketService from 'services/socketService';
 import {
   RTCPeerConnection,
@@ -12,7 +12,7 @@ import InCallManager from 'react-native-incall-manager';
 
 import styles from './styles';
 
-const configuration = { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] };
+const configuration = {iceServers: [{url: 'stun:stun.l.google.com:19302'}]};
 let peerConnection;
 
 class Phat extends React.PureComponent {
@@ -51,7 +51,7 @@ class Phat extends React.PureComponent {
 
     const facing = isFront ? 'front' : 'environment';
     const videoSourceId = devices.find(
-      (device) => device.kind === 'videoinput' && device.facing === facing
+      device => device.kind === 'videoinput' && device.facing === facing
     );
     const facingMode = isFront ? 'user' : 'environment';
     const constraints = {
@@ -63,7 +63,7 @@ class Phat extends React.PureComponent {
           minFrameRate: 30,
         },
         facingMode,
-        optional: videoSourceId ? [{ sourceId: videoSourceId }] : [],
+        optional: videoSourceId ? [{sourceId: videoSourceId}] : [],
       },
     };
     const newStream = await mediaDevices.getUserMedia(constraints);
@@ -77,16 +77,16 @@ class Phat extends React.PureComponent {
   };
 
   onOfferCallBack = async (id, description) => {
-    const { localStream } = this.state;
+    const {localStream} = this.state;
 
     peerConnection = new RTCPeerConnection(configuration);
     peerConnection.addStream(localStream);
-    peerConnection.onicecandidate = (event) => {
+    peerConnection.onicecandidate = event => {
       if (event.candidate) {
         SocketService.candidate(id, event.candidate.toJSON());
       }
     };
-    peerConnection.onaddstream = (e) => {
+    peerConnection.onaddstream = e => {
       if (e.stream && peerConnection !== e.stream) {
         this.setState({
           remoteStream: e.stream,
@@ -100,18 +100,18 @@ class Phat extends React.PureComponent {
   };
 
   switchCamera = () => {
-    const { localStream } = this.state;
-    localStream.getVideoTracks().forEach((track) => track._switchCamera());
+    const {localStream} = this.state;
+    localStream.getVideoTracks().forEach(track => track._switchCamera());
   };
 
   // Mutes the local's outgoing audio
   toggleMute = () => {
-    const { localStream, remoteStream } = this.state;
+    const {localStream, remoteStream} = this.state;
 
     if (!remoteStream) {
       return;
     }
-    localStream.getAudioTracks().forEach((track) => {
+    localStream.getAudioTracks().forEach(track => {
       console.log(track.enabled ? 'muting' : 'unmuting', ' local track', track);
       track.enabled = !track.enabled;
       this.setState({
@@ -128,7 +128,7 @@ class Phat extends React.PureComponent {
     });
   };
 
-  onDisconnectPeerCallBack = (id) => {
+  onDisconnectPeerCallBack = id => {
     peerConnection && peerConnection.close();
   };
 
@@ -140,7 +140,7 @@ class Phat extends React.PureComponent {
   };
 
   render() {
-    const { localStream, id, remoteStream } = this.state;
+    const {localStream, id, remoteStream} = this.state;
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.switchCamera}>

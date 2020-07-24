@@ -7,6 +7,7 @@ import VideoCall from 'screens/VideoCall';
 import Chat from 'screens/Chat';
 import Account from 'screens/Account';
 import Notification from 'screens/Notification';
+import AuthStack from './AuthStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ class Stack extends React.PureComponent {
       >
         <Tab.Screen
           name={Routes.VIDEO_CALL}
-          component={VideoCall}
+          component={AuthStack}
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({color, size}) => (

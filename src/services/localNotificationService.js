@@ -4,7 +4,7 @@ import {Platform} from 'react-native';
 import isEmpty from 'lodash/isEmpty';
 
 class _LocalNotificationService {
-  configure = (onOpenNotification) => {
+  configure = onOpenNotification => {
     PushNotification.configure({
       onRegister: function (token) {
         console.log('[LocalNotificationService] onRegister:', token);
@@ -99,7 +99,7 @@ class _LocalNotificationService {
     }
   };
 
-  removeDeliveredNotificationByID = (notificationId) => {
+  removeDeliveredNotificationByID = notificationId => {
     console.log('[LocalNotificationService] removeDeliveredNotificationByID: ', notificationId);
     PushNotification.cancelLocalNotifications({id: `${notificationId}`});
   };

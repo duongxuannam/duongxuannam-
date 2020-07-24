@@ -1,17 +1,33 @@
 import * as React from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, TouchableOpacity, TextInput} from 'react-native';
 import {l10n} from 'languages';
 import styles from './styles';
 
 class VideoCall extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      roomId: '',
+    };
+  }
   render() {
     const {navigation} = this.props;
+    const {roomId} = this.state;
     return (
       <View style={styles.container}>
-        <Text>{l10n.hello}</Text>
-        <Button title="Go to Details" onPress={() => navigation.push('Detail')} />
-        <Button title="Push to top" onPress={() => navigation.popToTop()} />
-        <Button title="Go Home" onPress={() => navigation.navigate('Home')} />
+        <TextInput
+          value={roomId}
+          onChangeText={text => this.setState({roomId: text})}
+          style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 100}}
+        />
+        <TouchableOpacity onPress={() => navigation.navigate('RoomVideoCall', {roomId})}>
+          <Text>{l10n.enterRoom}</Text>
+        </TouchableOpacity>
+
+        <Text>{l10n.or}</Text>
+        <TouchableOpacity>
+          <Text>{l10n.createRoom}</Text>
+        </TouchableOpacity>
       </View>
     );
   }

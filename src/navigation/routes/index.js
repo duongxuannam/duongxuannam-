@@ -15,4 +15,5 @@ export default {
   CHAT: 'Chat',
   NOTIFICATION: 'Notification',
   ACCOUNT: 'Account',
+  ROOM_VIDEO_CALL: 'RoomVideoCall',
 };

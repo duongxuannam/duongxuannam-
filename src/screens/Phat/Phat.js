@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import SocketService from 'services/socketService';
 import {
   RTCPeerConnection,
@@ -61,7 +61,7 @@ class Phat extends React.PureComponent {
           minFrameRate: 30,
         },
         facingMode,
-        optional: videoSourceId ? [{ sourceId: videoSourceId }] : [],
+        optional: videoSourceId ? [{sourceId: videoSourceId}] : [],
       },
     };
     const newStream = await mediaDevices.getUserMedia(constraints);
@@ -72,8 +72,8 @@ class Phat extends React.PureComponent {
   };
 
   onWatcherCallBack = async id => {
-    const { localStream } = this.state;
-    const configuration = { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] };
+    const {localStream} = this.state;
+    const configuration = {iceServers: [{url: 'stun:stun.l.google.com:19302'}]};
     const peerConnection = new RTCPeerConnection(configuration);
     peerConnections[id] = peerConnection;
     peerConnection.addStream(localStream);
@@ -108,13 +108,13 @@ class Phat extends React.PureComponent {
   };
 
   switchCamera = () => {
-    const { localStream } = this.state;
+    const {localStream} = this.state;
     localStream.getVideoTracks().forEach(track => track._switchCamera());
   };
 
   // Mutes the local's outgoing audio
   toggleMute = () => {
-    const { localStream, remoteStream } = this.state;
+    const {localStream, remoteStream} = this.state;
 
     if (!remoteStream) {
       return;
@@ -129,7 +129,7 @@ class Phat extends React.PureComponent {
   };
 
   onExitScreen = () => {
-    Object.keys(peerConnections).forEach(function(key) {
+    Object.keys(peerConnections).forEach(function (key) {
       peerConnections[key] && peerConnections[key].close();
       peerConnections[key] && delete peerConnections[key];
     });
@@ -152,7 +152,7 @@ class Phat extends React.PureComponent {
   };
 
   render() {
-    const { localStream, id, remoteStream } = this.state;
+    const {localStream, id, remoteStream} = this.state;
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.switchCamera}>
