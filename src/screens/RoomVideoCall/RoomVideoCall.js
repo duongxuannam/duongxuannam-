@@ -83,6 +83,7 @@ class RoomVideoCall extends React.Component {
       localStream: newStream,
     });
   };
+
   onGetRoomsCallBack = room => console.log('cbOnGetRooms ', room);
 
   onLeaveRoomCallBack = id => {
@@ -108,6 +109,7 @@ class RoomVideoCall extends React.Component {
       remoteStream: {},
     });
   };
+
   // o san trong phong
 
   onJoinRoomCallBack = async id => {
@@ -115,6 +117,8 @@ class RoomVideoCall extends React.Component {
     const {localStream} = this.state;
     const peerConnection = new RTCPeerConnection(configuration);
     peerConnections[id] = peerConnection;
+    // peerConnection.getRemoteStreams()[0].enabled = false;
+    // peerConnection.getStats().then(data => conosle.log(data)).catch(e => console.log(e))
     peerConnection.addStream(localStream);
     peerConnection.onicecandidate = event => {
       console.log('flowww 2');
@@ -222,10 +226,6 @@ class RoomVideoCall extends React.Component {
               </View>
             );
           })}
-
-        {/* <View style={styles.rtcview}>
-          {remoteStream && <RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />}
-        </View> */}
       </View>
     );
   }

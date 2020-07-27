@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import dataReducer from 'data/reducer';
 import servicesReducer from 'services/reducer';
 

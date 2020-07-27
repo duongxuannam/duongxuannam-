@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 import Routes from 'navigation/routes';
 
 export const navigationRef = React.createRef();
@@ -22,7 +22,7 @@ export const resetAuthStack = () => {
   navigationRef.current?.dispatch(
     CommonActions.reset({
       index: 1,
-      routes: [{ name: Routes.AUTH_STACK }],
+      routes: [{name: Routes.AUTH_STACK}],
     })
   );
 };
