@@ -10,9 +10,9 @@
 # Uses `gsed` because I'm on a Mac. Can easily replace with `sed` if you don't have `gsed`.
 #
 # This isn't perfect; it won't find every conversion issue. You break it you buy it. Viewer discretion is advised.
-
-MAPPING_FILE=scripts/android/androidx-class-mapping.csv
-PROJECT_DIR=node_modules
+# brew install gnu-sed    
+MAPPING_FILE=./androidx-class-mapping.csv
+PROJECT_DIR=../../node_modules
 
 replace=""
 while IFS=, read -r from to
