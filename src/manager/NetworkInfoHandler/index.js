@@ -11,7 +11,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({ setIsConnected }, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NetworkInfoHandler);
+export default connect(mapStateToProps, mapDispatchToProps)(NetworkInfoHandler);

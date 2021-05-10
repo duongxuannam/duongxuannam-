@@ -11,7 +11,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AppStateHandler);
+export default connect(null, mapDispatchToProps)(AppStateHandler);

@@ -6,9 +6,9 @@
  * @flow
  */
 import React from 'react';
-import {UIManager} from 'react-native';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/lib/integration/react';
+import { UIManager } from 'react-native';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import Navigation from 'navigation';
 
 import CommonService from 'manager/CommonService';
@@ -18,8 +18,9 @@ import NotificationHandler from 'manager/NotificationHandler';
 import GlobalModal from 'manager/GlobalModal';
 import GlobalToast from 'manager/GlobalToast';
 // Redux Store
-import {persistor, store} from 'configureStore';
+import { persistor, store } from 'configureStore';
 import Platform from 'utils/platform';
+import SocketService from 'services/socketService';
 
 if (Platform.isAndroid) {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -28,6 +29,9 @@ if (Platform.isAndroid) {
 }
 
 class App extends React.PureComponent {
+  componentDidMount() {
+    SocketService.connectSocket();
+  }
   render() {
     return (
       <Provider store={store}>

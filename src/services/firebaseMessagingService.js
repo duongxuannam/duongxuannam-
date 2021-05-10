@@ -1,5 +1,5 @@
 import messaging from '@react-native-firebase/messaging';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 class _FCMService {
   register = (onRegister, onNotification, onOpenNotification) => {

@@ -17,7 +17,4 @@ const mapStateToProps = state => ({
   toastProps: GlobalToastSelector.getToastProps(state),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GlobalToast);
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalToast);

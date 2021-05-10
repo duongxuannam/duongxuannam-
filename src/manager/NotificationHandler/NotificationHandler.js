@@ -8,7 +8,7 @@ import LocalNotificationService from 'services/localNotificationService';
 /**
  * utils & constants
  */
-import {doNothing} from 'constants/propsConstant';
+import { doNothing } from 'constants/propsConstant';
 
 class NotificationHandler extends React.PureComponent {
   componentDidMount() {

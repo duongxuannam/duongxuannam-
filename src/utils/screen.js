@@ -14,6 +14,8 @@ const buildAppTranslucentHeaderSpace = () => {
   }
   return 0;
 };
+export const heightPhone = height;
+export const widthPhone = width;
 
 /**
  *

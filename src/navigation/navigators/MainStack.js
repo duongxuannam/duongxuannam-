@@ -1,13 +1,12 @@
 import * as React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Routes from 'navigation/routes';
-import VideoCall from 'screens/VideoCall';
+import Home from 'screens/NewHome';
 import Chat from 'screens/Chat';
 import Account from 'screens/Account';
 import Notification from 'screens/Notification';
-import AuthStack from './AuthStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,10 +22,10 @@ class Stack extends React.PureComponent {
       >
         <Tab.Screen
           name={Routes.VIDEO_CALL}
-          component={AuthStack}
+          component={Home}
           options={{
             tabBarLabel: 'Home',
-            tabBarIcon: ({color, size}) => (
+            tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={size} />
             ),
           }}
@@ -36,7 +35,7 @@ class Stack extends React.PureComponent {
           component={Chat}
           options={{
             tabBarLabel: 'Chat',
-            tabBarIcon: ({color, size}) => (
+            tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="chat" color={color} size={size} />
             ),
           }}
@@ -46,7 +45,7 @@ class Stack extends React.PureComponent {
           component={Notification}
           options={{
             tabBarLabel: 'Notification',
-            tabBarIcon: ({color, size}) => (
+            tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="bell" color={color} size={size} />
             ),
             tabBarBadge: 3,
@@ -57,7 +56,7 @@ class Stack extends React.PureComponent {
           component={Account}
           options={{
             tabBarLabel: 'Profile',
-            tabBarIcon: ({color, size}) => (
+            tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="account" color={color} size={size} />
             ),
           }}
