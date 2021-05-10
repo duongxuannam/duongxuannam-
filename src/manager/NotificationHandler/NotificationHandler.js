@@ -33,6 +33,7 @@ class NotificationHandler extends React.PureComponent {
   };
 
   onOpenNotification = notify => {
+    console.log('handle notification in here');
     console.log('[App] onOpenNotification: ', notify);
     alert('Open Notification: ' + notify?.body);
   };
