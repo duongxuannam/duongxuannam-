@@ -10,7 +10,7 @@ class _SocketService {
     // this.socket = io('https://api-playhard.herokuapp.com/', {
     //   forceNew: true,
     // });
-    this.socket = io('https://9fd6b5cf46e7.ngrok.io/', {
+    this.socket = io('https://b1fa4722a042.ngrok.io/', {
       forceNew: true,
     });
     return this.socket;

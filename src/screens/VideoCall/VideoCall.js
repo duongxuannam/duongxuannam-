@@ -1,36 +1,48 @@
-import * as React from 'react';
-import {View, Text, Button, TouchableOpacity, TextInput} from 'react-native';
-import {l10n} from 'languages';
+import React from 'react';
+import { View, TouchableOpacity, Text } from 'react-native';
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import { RTCView } from 'react-native-webrtc';
+import Spacer from 'components/Spacer';
+import { useVideoCall } from './hooks';
 import styles from './styles';
 
-class VideoCall extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      roomId: '',
-    };
-  }
-  render() {
-    const {navigation} = this.props;
-    const {roomId} = this.state;
-    return (
-      <View style={styles.container}>
-        <TextInput
-          value={roomId}
-          onChangeText={text => this.setState({roomId: text})}
-          style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 100}}
-        />
-        <TouchableOpacity onPress={() => navigation.navigate('RoomVideoCall', {roomId})}>
-          <Text>{l10n.enterRoom}</Text>
-        </TouchableOpacity>
-
-        <Text>{l10n.or}</Text>
-        <TouchableOpacity>
-          <Text>{l10n.createRoom}</Text>
-        </TouchableOpacity>
+export default function VideoCall({ navigation }) {
+  const { localStream, remoteStream } = useVideoCall();
+  console.log('navigation ', localStream);
+  return (
+    <View style={styles.container}>
+      <View style={styles.customerContainer}>
+        {remoteStream ? (
+          <RTCView objectFit="cover" style={styles.rtcBox} streamURL={localStream.toURL()} />
+        ) : (
+          <View style={styles.loadingContainer}>
+            <Text>Dang tai du lieu</Text>
+          </View>
+        )}
+        <View style={styles.actionContainer}>
+          <View style={styles.subActionContainer}>
+            <TouchableOpacity style={styles.muteButton}>
+              <FontAwesomeIcon name="volume-mute" size={20} color="white" />
+            </TouchableOpacity>
+            <Spacer width={20} />
+            <TouchableOpacity style={styles.switchCameraButton}>
+              <AntIcon name="videocamera" size={20} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
-    );
-  }
-}
 
-export default VideoCall;
+      {localStream && (
+        <View style={styles.localContainer}>
+          <RTCView
+            objectFit="cover"
+            zOrder={1}
+            style={styles.rtcBox}
+            streamURL={localStream.toURL()}
+          />
+        </View>
+      )}
+    </View>
+  );
+}

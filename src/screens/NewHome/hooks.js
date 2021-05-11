@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import PeerService from 'services/peerService';
+// import PeerService from 'services/peerService';
 import SocketService from 'services/socketService';
 import { openCamera } from './helpers';
 
@@ -13,7 +13,7 @@ export const useVideoCall = () => {
     const turnOnCamera = async () => {
       const newStream = await openCamera();
       setLocalStream(newStream);
-      PeerService.peerServer.on('open', userId => {});
+      // PeerService.peerServer.on('open', userId => {});
     };
     turnOnCamera();
     return () => {

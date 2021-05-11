@@ -4,7 +4,7 @@ import { useVideoCall } from './hooks';
 import VideoBox from './components/VideoBox';
 import styles from './styles';
 
-export default function App() {
+export default function Home() {
   const { localStream } = useVideoCall();
   return (
     <SafeAreaView style={styles.container}>

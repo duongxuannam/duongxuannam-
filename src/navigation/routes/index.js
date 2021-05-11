@@ -7,13 +7,14 @@ export default {
   LOGIN: 'Login',
 
   // MainStack
-  HOME: 'Home',
+  TAB_BAR: 'TabBar',
+  VIDEO_CALL: 'VideoCall',
   DETAIL: 'Detail',
 
   /// TAB
-  VIDEO_CALL: 'VideoCall',
+  HOME: 'Home',
   CHAT: 'Chat',
   NOTIFICATION: 'Notification',
   ACCOUNT: 'Account',
-  ROOM_VIDEO_CALL: 'RoomVideoCall',
+  // ROOM_VIDEO_CALL: 'RoomVideoCall',
 };
