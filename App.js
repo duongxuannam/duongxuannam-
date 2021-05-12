@@ -20,7 +20,6 @@ import GlobalToast from 'manager/GlobalToast';
 // Redux Store
 import { persistor, store } from 'configureStore';
 import Platform from 'utils/platform';
-import SocketService from 'services/socketService';
 
 if (Platform.isAndroid) {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -29,9 +28,6 @@ if (Platform.isAndroid) {
 }
 
 class App extends React.PureComponent {
-  componentDidMount() {
-    SocketService.connectSocket();
-  }
   render() {
     return (
       <Provider store={store}>

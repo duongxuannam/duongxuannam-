@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 import {
   RTCPeerConnection,
   RTCView,
@@ -13,7 +13,7 @@ import SocketService from 'services/socketService';
 import styles from './styles';
 
 const peerConnections = {};
-const configuration = {iceServers: [{url: 'stun:stun.l.google.com:19302'}]};
+const configuration = { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] };
 
 class RoomVideoCall extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class RoomVideoCall extends React.Component {
   }
 
   componentDidMount() {
-    const {roomId, name} = this.state;
+    const { roomId, name } = this.state;
     SocketService.joinRoom(roomId, roomId, name);
     SocketService.getRooms(roomId);
 
@@ -50,7 +50,7 @@ class RoomVideoCall extends React.Component {
     return true;
   }
   componentWillUnmount() {
-    const {roomId} = this.state;
+    const { roomId } = this.state;
     SocketService.leaveRoom(roomId);
     SocketService.disConnectSocket();
     this.onExitScreen();
@@ -75,7 +75,7 @@ class RoomVideoCall extends React.Component {
           minFrameRate: 30,
         },
         facingMode,
-        optional: videoSourceId ? [{sourceId: videoSourceId}] : [],
+        optional: videoSourceId ? [{ sourceId: videoSourceId }] : [],
       },
     };
     const newStream = await mediaDevices.getUserMedia(constraints);
@@ -87,7 +87,7 @@ class RoomVideoCall extends React.Component {
   onGetRoomsCallBack = room => console.log('cbOnGetRooms ', room);
 
   onLeaveRoomCallBack = id => {
-    const {roomId, remoteStream} = this.state;
+    const { roomId, remoteStream } = this.state;
     SocketService.getRooms(roomId);
 
     peerConnections[id] && peerConnections[id].close();
@@ -114,7 +114,7 @@ class RoomVideoCall extends React.Component {
 
   onJoinRoomCallBack = async id => {
     console.log('flowww ');
-    const {localStream} = this.state;
+    const { localStream } = this.state;
     const peerConnection = new RTCPeerConnection(configuration);
     peerConnections[id] = peerConnection;
     // peerConnection.getRemoteStreams()[0].enabled = false;
@@ -142,7 +142,7 @@ class RoomVideoCall extends React.Component {
   onAnswerRoomVideoCallBack = (id, description) => {
     console.log('flowww 4');
 
-    const {remoteStream} = this.state;
+    const { remoteStream } = this.state;
     peerConnections[id].onaddstream = e => {
       console.log('flowww 5');
 
@@ -150,7 +150,7 @@ class RoomVideoCall extends React.Component {
         console.log('flowww 6');
 
         const newStream = e.stream;
-        const newRemoteStream = {...remoteStream, [id]: newStream};
+        const newRemoteStream = { ...remoteStream, [id]: newStream };
         this.setState({
           remoteStream: newRemoteStream,
         });
@@ -173,7 +173,7 @@ class RoomVideoCall extends React.Component {
 
   onOfferRoomCallBack = async (id, description) => {
     console.log('only you');
-    const {localStream} = this.state;
+    const { localStream } = this.state;
     const peerConnection = new RTCPeerConnection(configuration);
     peerConnections[id] = peerConnection;
     peerConnection.addStream(localStream);
@@ -189,13 +189,13 @@ class RoomVideoCall extends React.Component {
     peerConnection.onaddstream = e => {
       console.log('only you 4');
 
-      const {remoteStream} = this.state;
+      const { remoteStream } = this.state;
 
       if (e.stream && peerConnection !== e.stream) {
         console.log('only you 5');
 
         const newStream = e.stream;
-        const newRemoteStream = {...remoteStream, [id]: newStream};
+        const newRemoteStream = { ...remoteStream, [id]: newStream };
         this.setState({
           remoteStream: newRemoteStream,
         });
@@ -210,7 +210,7 @@ class RoomVideoCall extends React.Component {
   };
 
   render() {
-    const {roomId, localStream, remoteStream} = this.state;
+    const { roomId, localStream, remoteStream } = this.state;
     return (
       <View style={styles.container}>
         <Text>{roomId}</Text>

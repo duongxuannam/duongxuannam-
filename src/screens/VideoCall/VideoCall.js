@@ -8,8 +8,8 @@ import { useVideoCall } from './hooks';
 import styles from './styles';
 
 export default function VideoCall({ navigation }) {
-  const { localStream, remoteStream } = useVideoCall();
-  console.log('navigation ', localStream);
+  const { localStream, remoteStream, room } = useVideoCall();
+  console.log('room ', room);
   return (
     <View style={styles.container}>
       <View style={styles.customerContainer}>

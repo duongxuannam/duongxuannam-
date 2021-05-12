@@ -7,10 +7,16 @@ import styles from './styles';
 
 export default function Home({ navigation }) {
   const [roomId, setRoomId] = useState();
+  const [name, setName] = useState();
+
   return (
     <View style={styles.container}>
+      <Text>Room</Text>
       <TextInput value={roomId} onChangeText={text => setRoomId(text)} style={styles.textInput} />
-      <TouchableOpacity onPress={() => navigate(Routes.VIDEO_CALL, { roomId: roomId || 1 })}>
+      <Text>Name</Text>
+      <TextInput value={name} onChangeText={text => setName(text)} style={styles.textInput} />
+
+      <TouchableOpacity onPress={() => navigate(Routes.VIDEO_CALL, { roomId: roomId || 1, name })}>
         <Text>{l10n.enterRoom}</Text>
       </TouchableOpacity>
 

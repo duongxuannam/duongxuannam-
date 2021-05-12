@@ -1,6 +1,6 @@
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import isEmpty from 'lodash/isEmpty';
 
 class _LocalNotificationService {
@@ -101,7 +101,7 @@ class _LocalNotificationService {
 
   removeDeliveredNotificationByID = notificationId => {
     console.log('[LocalNotificationService] removeDeliveredNotificationByID: ', notificationId);
-    PushNotification.cancelLocalNotifications({id: `${notificationId}`});
+    PushNotification.cancelLocalNotifications({ id: `${notificationId}` });
   };
 }
 

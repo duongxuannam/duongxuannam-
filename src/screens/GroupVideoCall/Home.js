@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, SafeAreaView, Button } from 'react-native';
 import { RTCPeerConnection, RTCView, mediaDevices } from 'react-native-webrtc';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 import styles from './styles';
 
-let socket = null;
+// let socket = null;
 
 export default function App() {
   const [localStream, setLocalStream] = React.useState();
@@ -15,16 +15,16 @@ export default function App() {
 
   const [isMuted, setIsMuted] = React.useState(false);
 
-  const connectSocket = () => {
-    socket = io('127.0.0.1:3000', {});
-    return socket;
-  };
+  // const connectSocket = () => {
+  //   socket = io('127.0.0.1:3000', {});
+  //   return socket;
+  // };
 
-  const disConnectSocket = () => {
-    if (socket) {
-      socket.disconnect();
-    }
-  };
+  // const disConnectSocket = () => {
+  //   if (socket) {
+  //     socket.disconnect();
+  //   }
+  // };
 
   const startLocalStream = async () => {
     // isFront will determine if the initial camera should face user or environment
