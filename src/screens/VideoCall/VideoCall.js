@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import { RTCView } from 'react-native-webrtc';
+import isEmpty from 'lodash/isEmpty';
 import Spacer from 'components/Spacer';
 import { useVideoCall } from './hooks';
 import styles from './styles';
@@ -13,7 +14,7 @@ export default function VideoCall({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.customerContainer}>
-        {remoteStream ? (
+        {!isEmpty(remoteStream) ? (
           <RTCView objectFit="cover" style={styles.rtcBox} streamURL={localStream.toURL()} />
         ) : (
           <View style={styles.loadingContainer}>
