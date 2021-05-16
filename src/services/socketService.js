@@ -98,7 +98,7 @@ class _SocketService {
     this.socket && this.socket.emit('joinRoom', roomId, nameRoom, name);
   };
   onJoinRoom = cb => {
-    this.socket && this.socket.on('joinRoom', id => cb(id));
+    this.socket && this.socket.on('joinRoom', (id, rooms) => cb(id, rooms));
   };
   leaveRoom = roomId => {
     this.socket && this.socket.emit('leaveRoom', roomId);

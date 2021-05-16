@@ -10,7 +10,7 @@ const configuration = { iceServers: [{ url: 'stun:stun.l.google.com:19302' }] };
 
 export const useVideoCall = () => {
   const [localStream, setLocalStream] = useState();
-  const [remoteStream, setRemoteStream] = useState({});
+  const [remoteStreams, setRemoteStreams] = useState({});
   const [room, setRoom] = useState();
 
   const route = useRoute();
@@ -21,7 +21,7 @@ export const useVideoCall = () => {
     setRoom(roomParam);
   };
 
-  const onLeaveRoomCallBack = idUserLeave => {
+  const onLeaveRoomCallBack = useCallback(idUserLeave => {
     setRoom(preRoom => {
       const users = get(preRoom, ['users'], {});
       const user = users[idUserLeave];
@@ -34,10 +34,16 @@ export const useVideoCall = () => {
       };
       setRoom(newRoom);
     });
-  };
+    Object.keys(peerConnections).forEach(function (key) {
+      peerConnections[key] && peerConnections[key].close();
+      peerConnections[key] && delete peerConnections[key];
+    });
+    setRemoteStreams({});
+  }, []);
 
   const onJoinRoomCallBack = useCallback(
-    async idUserJoin => {
+    async (idUserJoin, roomParam) => {
+      setRoom(roomParam);
       const peerConnection = new RTCPeerConnection(configuration);
       peerConnections[idUserJoin] = peerConnection;
       peerConnections[idUserJoin].addStream(localStream);
@@ -75,9 +81,9 @@ export const useVideoCall = () => {
       peerConnections[idSender].onaddstream = e => {
         if (e.stream && peerConnections[idSender] !== e.stream) {
           const newStream = e.stream;
-          setRemoteStream(preStream => {
-            const newRemoteStream = { ...preStream, [idSender]: newStream };
-            return newRemoteStream;
+          setRemoteStreams(preStream => {
+            const newRemoteStreams = { ...preStream, [idSender]: newStream };
+            return newRemoteStreams;
           });
         }
       };
@@ -93,14 +99,23 @@ export const useVideoCall = () => {
     peerConnections[idSender].onaddstream = e => {
       if (e.stream && peerConnections[idSender] !== e.stream) {
         const newStream = e.stream;
-        setRemoteStream(preStream => {
-          const newRemoteStream = { ...preStream, [idSender]: newStream };
-          return newRemoteStream;
+        setRemoteStreams(preStream => {
+          const newRemoteStreams = { ...preStream, [idSender]: newStream };
+          return newRemoteStreams;
         });
       }
     };
     peerConnections[idSender].setRemoteDescription(new RTCSessionDescription(description));
   };
+
+  const exitRoom = useCallback(() => {
+    Object.keys(peerConnections).forEach(function (key) {
+      peerConnections[key] && peerConnections[key].close();
+      peerConnections[key] && delete peerConnections[key];
+    });
+    setLocalStream(null);
+    setRemoteStreams({});
+  }, []);
 
   useEffect(() => {
     SocketService.connectSocket();
@@ -117,8 +132,9 @@ export const useVideoCall = () => {
     return () => {
       SocketService.leaveRoom(roomId);
       SocketService.disConnectSocket();
+      exitRoom();
     };
-  }, [roomId, name]);
+  }, [roomId, name, exitRoom, onLeaveRoomCallBack]);
 
   useEffect(() => {
     //setup stream
@@ -134,9 +150,18 @@ export const useVideoCall = () => {
     turnOnCamera();
   }, []);
 
+  const customerStreams = [];
+
+  for (var remoteStream in remoteStreams) {
+    if (remoteStreams.hasOwnProperty(remoteStream)) {
+      customerStreams.push(remoteStreams[remoteStream]);
+    }
+  }
+
   return {
     localStream,
-    remoteStream,
+    remoteStreams,
     room,
+    customerStreams,
   };
 };

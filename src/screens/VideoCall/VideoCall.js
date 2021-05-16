@@ -9,13 +9,16 @@ import { useVideoCall } from './hooks';
 import styles from './styles';
 
 export default function VideoCall({ navigation }) {
-  const { localStream, remoteStream, room } = useVideoCall();
+  const { localStream, remoteStream, room, customerStreams } = useVideoCall();
   console.log('room ', room);
+  console.log('localStream ', localStream);
+
+  console.log('remote steam ', customerStreams[0]);
   return (
     <View style={styles.container}>
       <View style={styles.customerContainer}>
-        {!isEmpty(remoteStream) ? (
-          <RTCView objectFit="cover" style={styles.rtcBox} streamURL={localStream.toURL()} />
+        {!isEmpty(customerStreams) ? (
+          <RTCView objectFit="cover" style={styles.rtcBox} streamURL={customerStreams[0].toURL()} />
         ) : (
           <View style={styles.loadingContainer}>
             <Text>Dang tai du lieu</Text>
